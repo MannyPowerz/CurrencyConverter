@@ -1,10 +1,30 @@
 from requests import get
 from pprint import PrettyPrinter
 
-printer = PrettyPrinter()
+printer = PrettyPrinter() #Formatted Output for JSON
 
-# 1.) Dropdown menu for Currency selection currency 1 t& currency 2 with currency abreviation hyphen name of currecy hyphen Symbol if possible, Start with using endpoint of url and using json() method and convert currencies to a list and sort it
+# 1.) Dropdown menu for Currency selection currency 1 & currency 2 with currency abreviation hyphen name of currecy hyphen Symbol if possible, Start with using endpoint of url h then convert JSON dictionary into tuple and using json() method and convert currencies to a list and sort it 
 
+def generateCurrencyList():
+    endpoint = 
+    url = BASE_URL + endpoint
+    data = get(url).json()
+    dataList = list(data.items()).sort()
+    
+    return dataList
+    
+def printCurrencyList(currencies):
+    for name, currency in currencies:
+        name = currency["currencyName"]
+        currencyId = currency["id"]
+        symbol = currency.get("currencySymbol", "")
+        
+        print(f"{name} : {currencyId} - {symbol}")
+
+dataList = generateCurrencyList()
+printCurrencyList(dataList)
+    
+    
 
 # 2.) Exchange rate from currecy 1 converted to currency 2 is at a specific rate, test if example currecy 2 to currecy 1 rate is possible when flipped over positions providing different rate ,
 
