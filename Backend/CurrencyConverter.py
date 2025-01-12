@@ -25,15 +25,48 @@ dataList = generateCurrencyList()
 printCurrencyList(dataList)
     
     
+#______________________________________________________________
 
 # 2.) Exchange rate from currecy 1 converted to currency 2 is at a specific rate, test if example currecy 2 to currecy 1 rate is possible when flipped over positions providing different rate ,
+# - endpoint for echnage rate w/ "{currency1}_{currency2}""
+# - url assignemnt
+# - error handling if data is 0 print(" ") & return keyword
+# - use list of values method for the first that comes up in list 
 
+def exchangeRate(currecy1, currency2):
+    endpoint = 
+    url = BASE_URL + endpoint
+    data = get(url).json()
+    
+    if len(data) == 0:
+        print(f"Invalid Entry")
+        return
+    
+    return list(data.values())[0]
+
+rate = exchangeRate(inputId_1, inputId_2)
+
+
+#______________________________________________________________
 
 # 3.) Option after Exchange Rate recieved for Conversion of Amount inputed of currency 1 output Amount that will be recived of currecny 2 , rate times amount of currency 1
 
 
+def conversionOfAmount(currency1, currency2, amount):
+    rate = exchangeRate(inputId_1, inputId_2)
+    
+    try:
+        amount = float(amount)
+    except ValueError:
+        print(f"Invalid Amount")
+        return
+    
+    newAmount = rate * amount
+    return newAmount
 
+#If needed how to convert amount the other way around using currency2 amount as base currency to currecy 1 as mentioned getting a new rate going the opposite direction possibly
 
+#______________________________________________________________
 
 
 # The backend and frontend will communicate via API calls
