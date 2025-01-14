@@ -1,12 +1,20 @@
 from requests import get
 from pprint import PrettyPrinter
+from dotenv import load_dotenv
+import os
 
 printer = PrettyPrinter() #Formatted Output for JSON
+
+load_dotenv()
+
+API_KEY = os.getenv('API_KEY')
+BASE_URL = os.getenv('BASE_URL')
+
 
 # 1.) Dropdown menu for Currency selection currency 1 & currency 2 with currency abreviation hyphen name of currecy hyphen Symbol if possible, Start with using endpoint of url h then convert JSON dictionary into tuple and using json() method and convert currencies to a list and sort it 
 
 def generateCurrencyList():
-    endpoint = 
+    endpoint = f"api/v7/currencies?apiKey={API_KEY}"
     url = BASE_URL + endpoint
     data = get(url).json()
     dataList = list(data.items()).sort()
@@ -33,8 +41,8 @@ printCurrencyList(dataList)
 # - error handling if data is 0 print(" ") & return keyword
 # - use list of values method for the first that comes up in list 
 
-def exchangeRate(currecy1, currency2):
-    endpoint = 
+def exchangeRate(currency1, currency2):
+    endpoint = f"api/v7/convert?q={currency1}_{currency2}&compact=ultra&apiKey={API_KEY}"
     url = BASE_URL + endpoint
     data = get(url).json()
     
@@ -53,7 +61,8 @@ rate = exchangeRate(inputId_1, inputId_2)
 
 
 def conversionOfAmount(currency1, currency2, amount):
-    rate = exchangeRate(inputId_1, inputId_2)
+    
+    rate = exchangeRate(currency1, currency2)
     
     try:
         amount = float(amount)
@@ -63,6 +72,7 @@ def conversionOfAmount(currency1, currency2, amount):
     
     newAmount = rate * amount
     return newAmount
+
 
 #If needed how to convert amount the other way around using currency2 amount as base currency to currecy 1 as mentioned getting a new rate going the opposite direction possibly
 
