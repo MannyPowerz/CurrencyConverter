@@ -1,6 +1,7 @@
 from requests import get
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import os
 
 
@@ -8,6 +9,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 API_KEY = os.getenv('API_KEY')
 BASE_URL = os.getenv('BASE_URL')
@@ -27,7 +29,7 @@ def generate_Currency_List():
     )
     return currency_list
 
-@app.route('/currencies', methods=['GET'])
+@app.route('/api/currencies', methods=['GET'])
 def currencies():
     currency_list = generate_Currency_List()
     return jsonify(currency_list)
@@ -64,7 +66,7 @@ def get_exchange_rate(currency1, currency2):
 
 
 
-@app.route('/exchange-rate', methods =['GET'])
+@app.route('/api/exchange-rate', methods =['GET'])
 def exchange_rate():
     currency1 = request.args.get('currency1')
     currency2 = request.args.get('currency2')
@@ -96,7 +98,7 @@ def convert_Amount(currency1, currency2, amount):
     newAmount = rate * amount
     return newAmount
 
-
+@app.route('/api/convert', methods=['GET'])
 def convert():
     currency1 = request.args.get('currency1')
     currency2 = request.args.get('currency2')
