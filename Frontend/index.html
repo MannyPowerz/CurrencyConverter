@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+    <div class="converter">
+        <h1>Currency Converter</h1>
+            <!-- May change Selcetion to & from currency based on api usecases w/in dropdown menu
+            baseCurrencySelect to fromSelect
+            quoteCurrencySelect to toSelect -->
+        <div class="form-group">
+            <label for="baseCurrencySelect">From Currency:</label>
+            <select id="baseCurrencySelect"></select>
+        </div>
+        <div class="form-group">
+            <label for="quoteCurrencySelect">To Currency:</label>
+            <select id="quoteCurrencySelect"></select>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" min="0" step="0.01">
+        </div>
+        <button onclick="convertCurrency()">Convert</button>
+        <div id="result"></div>
+    </div>
     <script src="script.js"></script>    
 </body>
 </html>
+
+<!-- Styling for User Interfaces bound to change after basic functionality is completed -->
