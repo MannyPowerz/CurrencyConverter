@@ -66,6 +66,8 @@ def get_exchange_rate(currency1, currency2):
 
 
 
+
+
 @app.route('/api/exchange-rate', methods =['GET'])
 def exchange_rate():
     currency1 = request.args.get('currency1')
