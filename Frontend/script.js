@@ -26,6 +26,46 @@ async function loadCurrecies()
     }
 }
 
+async function renderExchangeRate()
+{
+
+    const baseCurrencySelect = document.getElementById('baseCurrencySelect').value;
+    const quoteCurrencySelect = document.getElementById('quoteCurrencySelect').value;
+    const exchangeRateDiv = document.getElementById('exchangeRate') ;
+
+    if (!baseCurrencySelect || !quoteCurrencySelect) 
+    {
+        exchangeRateDiv.innerHTML = '';
+        return;
+    }
+    
+    try
+    {
+        const response = await axois.get('http://localhost:5500/api/exchange-rate', 
+        {
+            params: 
+            {   
+                currency1: baseCurrencySelect,
+                currency2: quoteCurrencySelect,
+            }
+        } );
+        
+        const rate = respoonse.data.rate;
+        const formattedRate = rate.toFixed(4);
+
+        exchangeRateDiv.innerHTML = '<div><strong>Exchange Rate:</strong> ${fromCurrency}/${toCurrency} = ${formattedRate}</div>';
+    }
+
+
+
+    catch (error)
+    {
+        console.error('Error generating exchange rate:', error);
+        exchangeRateDiv.innerHTML = 'Unable to fetch exchange rate';
+    }
+
+}
+
 async function convertCurrencies()
 {
     const baseCurrencySelect = document.getElementById('baseCurrencySelect').value;
@@ -45,7 +85,8 @@ async function convertCurrencies()
         const response = await axois.get('http://localhost:5500/api/convert', 
         {
             params: 
-            {   currency1: baseCurrencySelect,
+            {   
+                currency1: baseCurrencySelect,
                 currency2: quoteCurrencySelect,
                 amount: amount
             }
