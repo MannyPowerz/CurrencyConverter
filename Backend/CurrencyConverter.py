@@ -1,6 +1,6 @@
 from requests import get
 from dotenv import load_dotenv
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, current_app
 from flask_cors import CORS
 import os
 
@@ -11,39 +11,71 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+
 API_KEY = os.getenv('API_KEY')
 BASE_URL = os.getenv('BASE_URL')
+
+print("API_KEY:", API_KEY)  # Make sure it's not None
+print("BASE_URL:", BASE_URL)  # Make sure it's correct
 
 
 # 1.) Dropdown menu for Currency selection currency 1 & currency 2 with currency abreviation hyphen name of currecy hyphen Symbol if possible, Start with using endpoint of url h then convert JSON dictionary into tuple and using json() method and convert currencies to a list and sort it 
 
-def generate_Currency_List():
-    endpoint = f"api/v7/currencies?apiKey={API_KEY}"
-    url = BASE_URL + endpoint
-    response = get(url)
-    data = response.json()
-    currencies = data.get("results", {}) 
+# def generate_Currency_List():
+#     endpoint = f"api/v7/currencies?apiKey={API_KEY}"
+#     url = BASE_URL + endpoint
+#     response = get(url)
+#     data = response.json()
+#     currencies = data.get("results", {}) 
     
-    currency_list = sorted(
-        [(info["id"], info.get("currencyName", ""), info.get("currencySymbol", "")) for info in currencies.values()]
-    )
-    return currency_list
+#     currency_list = sorted(
+#         [(info["id"], info.get("currencyName", ""), info.get("currencySymbol", "")) for info in currencies.values()]
+#     )
+#     return currency_list
+
+from flask import current_app
+
+def generate_Currency_List():
+    try:
+        endpoint = f"api/v7/currencies?apiKey={API_KEY}"
+        url = BASE_URL + endpoint
+        response = get(url)
+        response.raise_for_status()  # Raises an error for bad status codes
+        
+        data = response.json()
+        if not data:
+            print("No data received from API")
+            return []
+            
+        currencies = data.get("results", {})
+        if not currencies:
+            print("No currencies found in data")
+            return []
+            
+        currency_list = sorted(
+            [(info["id"], info.get("currencyName", ""), info.get("currencySymbol", "")) 
+            for info in currencies.values()]
+        )
+        return currency_list
+        
+    except Exception as e:
+        print(f"Error in generate_Currency_List: {str(e)}")
+        return []
+
+
+# @app.route('/api/currencies', methods=['GET'])
+# def currencies():
+#     currency_list = generate_Currency_List()
+#     return jsonify(currency_list)
 
 @app.route('/api/currencies', methods=['GET'])
 def currencies():
+    print("Currencies endpoint hit")  # Debug print
     currency_list = generate_Currency_List()
+    print("Currency list:", currency_list[:5])  # Print first 5 currencies
     return jsonify(currency_list)
-    
-# def printCurrencyList(currencies):
-#     for name, currency in currencies:
-#         name = currency["currencyName"]
-#         currencyId = currency["id"]
-#         symbol = currency.get("currencySymbol", "")
-        
-#         print(f"{name} : {currencyId} - {symbol}")
 
-# dataList = generateCurrencyList()
-# printCurrencyList(dataList)
+
 
 #______________________________________________________________
 
@@ -125,7 +157,24 @@ def convert():
 # FETCH data in python and set through web framework 
 
 # Run the Flask app
+    
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
+def test_api_connection():
+    endpoint = f"api/v7/currencies?apiKey={API_KEY}"
+    url = BASE_URL + endpoint
+    try:
+        response = get(url)
+        print("Status Code:", response.status_code)
+        print("Response:", response.json())
+    except Exception as e:
+        print("API Error:", str(e))
+
+# Add this to your main
 if __name__ == "__main__":
+    print("Testing API connection...")
+    test_api_connection()
     app.run(debug=True)
 
 #______________________________________________________________
