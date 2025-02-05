@@ -1,4 +1,11 @@
-body {
+@import "tailwindcss";
 
-}
+/* Find name of website and Add it to header */
 
+/* Currency convertor title on top  */
+
+/* Amount in base currency box under Base currncy abrevation same for Result of that to the quote currency to right ontop of the result in terms of amount  exchange rate , In a box */ 
+
+/* Number of base currency amount with base currnmcy name "to" quoute currency name */
+
+/* History of requests below of coinversions below  */

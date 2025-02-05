@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="output.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:wght@300;400;700&display=swap"
+        rel="stylesheet">
 </head>
-<body>
+<body> 
+<div class="mt-20 ml-20">
     <div class="converter">
-        <h1>Currency Converter</h1>
+        <h1 class="flex justify-center font-bold mb-12 text-4xl">Currency Converter</h1>
             <!-- May change Selcetion to & from currency based on api usecases w/in dropdown menu
             baseCurrencySelect to fromSelect
             quoteCurrencySelect to toSelect -->
@@ -29,7 +35,8 @@
         <button onclick="convertCurrencies()">Convert</button>
         <div id="result"></div>
     </div>
-    <script src="script.js"></script>    
+    <script src="script.js"></script>
+</div>
 </body>
 </html>
 
